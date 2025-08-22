@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Warning!</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: black;
+      color: red;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bg-image {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    h1 {
+      font-size: 100px;
+      max-width: 90%;
+      z-index: 1;
+      position: relative;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; color: red; }
+      25% { opacity: 0; color: white; }
+      50% { opacity: 1; color: yellow; }
+      75% { opacity: 0; color: red; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Scary background image -->
+  <img src="scareface.jpg" alt="Scary Face" class="bg-image">
+
+  <!-- Greeting text -->
+  <h1 id="greeting">Hello there</h1>
+
+  <!-- Siren Sound -->
+  <audio autoplay loop id="scream">
+    <source src="woman-scream-3.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Retrieve username from localStorage
+    const username = localStorage.getItem("username") || "Stranger";
+    document.getElementById("greeting").textContent = `Hello there, ${username}`;
+
+    // Set scream volume to max
+    const scream = document.getElementById('scream');
+    scream.volume = 1.0;
+  </script>
+</body>
+</html>

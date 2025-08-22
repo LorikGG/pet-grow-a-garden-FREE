@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FREE PETS GROW A Garden</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(130deg, #ff2503, #ff6702 ,#20ffbc ,#2873dd ,#7b2fd9);
+      font-family: Arial, sans-serif;
+      color: white;
+      flex-direction: column;
+    }
+
+    .box {
+      width: 400px;
+      min-height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+    }
+
+    .box:hover {
+      transform: scale(1.05);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .texting {
+      width: 140px;
+      height: 50px;
+      margin-bottom: 15px;
+      background: #ffcc00;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .texting:hover {
+      background: #ffdb4d;
+      transform: scale(1.1);
+    }
+
+    .yellow-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .pet-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 15px;
+      object-fit: contain;
+      transition: 0.3s;
+    }
+
+    .pet-image:hover {
+      transform: scale(1.1);
+    }
+
+    .clickabutton {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #000000;
+      cursor: pointer;
+      background: rgba(255,255,255,0.6);
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+
+    #loginBox input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+      width: 80%;
+    }
+
+    #greeting {
+      margin-top: 10px;
+      font-size: 1.4rem;
+      color: black;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Box -->
+  <div id="loginBox" class="box">
+    <h1>Login to Your Garden</h1>
+    <input type="text" id="username" placeholder="Enter your name">
+    <button onclick="login()" class="texting">Login</button>
+  </div>
+
+  <!-- Main Pet Box -->
+  <div id="mainBox" class="box" style="display: none;">
+    <h1>Welcome to Grow a Garden Pet Box 🎁</h1>
+    <div id="greeting"></div>
+    <p class="clickabutton">Click the button to choose a pet</p>
+    <input id="choosePetBtn" class="texting" type="button" value="Choose Pet">
+    <div class="yellow-container"></div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" autoplay loop muted>
+    <source src="chillmusic.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <!-- Click/Pet Sound -->
+  <audio id="wowSound">
+    <source src="wowsound.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const loginBox = document.getElementById("loginBox");
+    const mainBox = document.getElementById("mainBox");
+    const usernameInput = document.getElementById("username");
+    const greeting = document.getElementById("greeting");
+
+    function login() {
+      const username = usernameInput.value.trim();
+      if (username) {
+        localStorage.setItem("username", username); // ✅ Save username here
+        loginBox.style.display = "none";
+        mainBox.style.display = "flex";
+        greeting.textContent = `Hello there, ${username}!`;
+      } else {
+        alert("Please enter your name to continue.");
+      }
+    }
+
+    const bgMusic = document.getElementById("bgMusic");
+    const wowSound = document.getElementById("wowSound");
+    const button = document.getElementById("choosePetBtn");
+    const container = document.querySelector(".yellow-container");
+
+    const pets = [
+      "kitsunefox.webp",
+      "cartoonoctopus.webp",
+      "raccoon.webp",
+      "butterfly.webp",
+      "candyblossom.webp",
+      "boneblossom.webp"
+    ];
+
+    let clickCount = 0;
+
+    const unlockMusic = () => {
+      bgMusic.muted = false;
+      bgMusic.play().catch(() => {});
+      document.removeEventListener("click", unlockMusic);
+      document.removeEventListener("keydown", unlockMusic);
+    };
+
+    document.addEventListener("click", unlockMusic);
+    document.addEventListener("keydown", unlockMusic);
+
+    button.addEventListener("click", () => {
+      wowSound.currentTime = 0;
+      wowSound.play();
+
+      const petIndex = clickCount % pets.length;
+      const img = document.createElement("img");
+      img.src = pets[petIndex];
+      img.classList.add("pet-image");
+
+      const link = document.createElement("a");
+      link.href = "GetHacked.html";
+      link.target = "_self";
+      link.appendChild(img);
+
+      container.appendChild(link);
+      clickCount++;
+    });
+  </script>
+
+</body>
+</html>
